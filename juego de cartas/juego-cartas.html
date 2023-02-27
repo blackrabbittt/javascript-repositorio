@@ -1,0 +1,152 @@
+<html>
+    <style>
+        body{
+        
+            display: flex;
+            align-items: center;
+    justify-content: center;
+        }
+        header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    font-family: montserrat;
+    font-size: 25px;
+    z-index: 3;
+    margin: 0;
+    padding: 0;
+}
+.contador {
+    width: 100%;
+    background: white;
+    box-shadow: 0px 5px 6px 0px rgb(124 124 124 / 45%);
+    display: flex;
+}
+.contador-item {
+    padding: 15px;
+}
+h4 {
+    margin: 0;
+}
+.numero-ca {
+    font-size: 56px;
+    font-weight: bold;
+}
+        #mesa {
+            display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+        .tarjeta{
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    background: linear-gradient(45deg, rgba(9,9,121,1) 29%, rgba(0,212,255,1) 100%);
+    box-shadow: 2px 5px 6px 0px rgb(151 151 151 / 63%);
+    position: relative;
+    transition: 0.3s;
+    cursor: pointer;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    
+}
+.tarjeta-cont{
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    transform: perspective(600px) rotateY(-180deg);
+    backface-visibility: hidden;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 2px 5px 6px 0px rgb(151 151 151 / 63%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 46px;
+
+}
+.tarjeta-cont::selection {
+    opacity: 0;
+    }
+    .tarjeta.descubierta{
+        transform: perspective(600px) rotateY(-180deg);
+    }
+@keyframes error{
+    10%, 90%{
+        transform: rotateY(-180deg) translateX(-1px);
+    }
+    20%, 80%{
+        transform: rotateY(-180deg) translateX(2px);
+    }
+    30%,50%, 70%{
+        transform: rotateY(-180deg) translateX(-4px);
+    }
+    40%, 60%{
+        transform: rotateY(-180deg) translateX(4px);
+    }
+
+
+}
+@keyframes acierto{
+    from{
+        transform: rotateY(-180deg) scale3d(1, 1, 1);
+        opacity: 1;
+    }
+    25%{
+        transform: rotateY(-180deg) scale3d(1.1, 1.1, 1.1);
+        opacity: 1;
+    }
+    to{
+        transform: rotateY(-180deg) scale3d(1, 1, 1);
+        opacity: 0;
+    }
+
+}
+
+    .acertada{
+        pointer-events: none;
+    }
+    .acertada .tarjeta-cont{
+        animation: acierto 1.3s ease-in-out forwards;
+    }
+
+    .error{
+        animation: error 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+    </style>
+<body>
+    <header>
+        <div class="contador">
+            <div class="contador-item">
+                <h4>Movimientos</h4>
+                <div class="numero-ca">
+                    <span id="mov">00</span>/<span id="total">20</span>
+                </div>
+            </div>
+            <div class="contador-item">
+                <h4>Tiempo</h4>
+                <div class="numero-ca">
+                    <span id="minutos">00</span>: <span id="segundos">00</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="mesa" class="mesa">
+    <div class="tarjeta">
+        <div class="tarjeta-cont">🧠</div>
+    </div>
+    </div>
+</body>
+
+<script src="./js/variables-globales.js"></script>
+<script src="./js/barajareparte.js"></script>
+<script src="./js/descubrir-comp.js"></script>
+<script src="./js/acierto-error.js"></script>
+<script src="./js/contador.js"></script>
+<script src="./js/cromometro.js"></script>
+<script src="./js/iniciiar.js"></script>
+</html>
