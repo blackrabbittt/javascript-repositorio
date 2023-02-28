@@ -3,9 +3,22 @@ function actualizarContador(){
     movimientos++;
     movimientosTexto = movimientos;
 
+    if(movimientos > niveles[nivelActual].movimientosMax){
+        gameOver();
+        return;
+    }
+
     if (movimientos < 10) {
         movimientosTexto = "0" + movimientos;
     }
     document.querySelector("#mov").innerText = movimientosTexto;
    // console.log(movimientosTexto);
+}
+
+function maxContador () {
+    var movimientosMaxTexto = niveles[nivelActual].movimientosMax;
+    if ( movimientosMaxTexto < 10){
+        movimientosMaxTexto = "0" + movimientosMaxTexto;
+    }
+    document.querySelector("#total").innerText = movimientosMaxTexto;
 }

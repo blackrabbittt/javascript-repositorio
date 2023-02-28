@@ -1,4 +1,12 @@
-reparteTarjetas();
+function iniciar(){
+movimientos = 0;
+reparteTarjetas(niveles[nivelActual].tarjetas);
+
+document.querySelector("#mov").innerText = "00";
+maxContador();
+document.querySelector("#endgame").classList.remove("visited")
+document.querySelector("#gameover").classList.remove("visited")
+document.querySelector("#subenivel").classList.remove("visited")
 
 document.querySelectorAll(".tarjeta").forEach(
     function(elemento){
@@ -6,4 +14,20 @@ document.querySelectorAll(".tarjeta").forEach(
     }
 );
 
-iniciaCronometro();
+//iniciaCronometro();
+}
+
+function reiniciar (){
+ nivelActual = 0;
+ actualizaNivel();
+ iniciar();   
+}
+
+iniciar();
+
+document.querySelectorAll(".reiniciar").forEach(
+    function(elemento){
+    elemento.addEventListener("click", reiniciar);
+});
+
+document.querySelector("#subir").addEventListener("click", cargaNuevoNivel);
