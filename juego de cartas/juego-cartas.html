@@ -73,13 +73,14 @@ h4 {
 }
 
 .cabecera-titulo {
-  font-family: var(--font-display);
+  
   font-weight: 600;
-  font-size: 0.8rem;
   text-transform: uppercase;
   line-height: 1;
   margin: 0;
-  color: rgba(0, 0, 0, 0.4);
+  font-family: montserrat;
+    color: black;
+    font-size: 25px;
 }
 .numero-ca {
     font-family: var(--font-display);
@@ -347,21 +348,21 @@ button {
         <div id="gameover" class="game-over main">
             <div class="modal">
                 <h2>¡Oh no!</h2>
-                <p>Te has quedado sin intentos 😔</p>
+                <p style="color:black;margin: 0 20px;text-align: center;">Te has quedado sin intentos 😔</p>
                 <button class="reiniciar">¿Reiniciar?</button>
             </div>
         </div>
         <div id="timeover" class="timeover main">
             <div class="modal">
               <h2>¡Oh no!</h2>
-              <p>Te has quedado sin tiempo 😭</p>
+              <p style="color:black;margin: 0 20px;text-align: center;">Te has quedado sin tiempo 😭</p>
               <button class="reiniciar">Reiniciar</button>
             </div>
           </div>
         <div id="endgame" class="end-game main">
             <div class="modal">
                 <h2>¡Enhorabuena!</h2>
-                <p>Has superado todos los niveles 🏆</p>
+                <p style="color:black;margin: 0 20px;text-align: center;">Has superado todos los niveles 🏆</p>
                 <button class="reiniciar">¿Reiniciar?</button>
             </div>
         </div>
