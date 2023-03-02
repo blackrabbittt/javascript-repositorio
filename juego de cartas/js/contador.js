@@ -3,7 +3,7 @@ function actualizarContador(){
     movimientos++;
     movimientosTexto = movimientos;
 
-    if(movimientos > niveles[nivelActual].movimientosMax){
+    if(movimientos > niveles[nivelActual].movimientosMax && !modoRelax){
         gameOver();
         return;
     }

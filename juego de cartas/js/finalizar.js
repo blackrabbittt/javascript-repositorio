@@ -1,4 +1,5 @@
 function finalizar(){
+    clearInterval(cronometro);
     if( nivelActual < niveles.length - 1){
     document.querySelector("#subenivel").classList.add("visited");
     }
