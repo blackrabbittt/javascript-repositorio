@@ -1,0 +1,118 @@
+<html>
+    <style>
+        html{
+            font-family: montserrat;
+        }
+        nav{
+            position: absolute;
+            z-index: 3;
+            width: 350px;
+            height: 100%;
+            display: none;
+            background: #0089ff;
+            color: white;
+            font-weight: bold;
+            border-radius: 0px 12px 12px 0px;
+        }
+        ul {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-size: 36px;
+}
+il:hover {
+    color: red;
+    cursor: pointer;
+}
+.menu-btn-a{
+    display: flex;
+    width: 60px;
+    padding: 8px;
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+    background: #0089ff;
+    border-style: none;
+    border-radius: 8px;
+    position: absolute;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    transition: .4s ease all;
+}
+.menu-btn-a:hover {
+    color: red;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.menu-btn-c{
+    display: flex;
+    width: 60px;
+    padding: 8px;
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+    border-style: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    justify-content: flex-end;
+}
+.menu-btn-c:hover {
+    color: red;
+    cursor: pointer;
+}
+.visible{
+    display: flex;
+}
+.novisible{
+    display: none;
+}
+
+    </style>
+    <header>
+        <button class="menu-btn-a">=</button>
+        <nav>
+            <button class="menu-btn-c">x</button>
+            <ul>
+                <il>prueba-01</il>
+                <il>prueba-02</il>
+                <il>prueba-03</il>
+                <il>prueba-04</il>
+                <il>prueba-05</il>
+            </ul>
+        </nav>
+        
+    </header>
+    <script>
+        function muestraMenu(evento) {
+  evento.preventDefault();
+  evento.stopPropagation();
+  document.querySelector("nav").classList.toggle("visible");
+}
+
+function ocultaMenu(evento) {
+  evento.preventDefault();
+  document.querySelector("nav").classList.remove("visible");
+}
+
+function clickFueraDeMenu(evento) {
+  if (evento.target.closest("nav")) {
+    return;
+  }
+  document.querySelector("nav").classList.remove("visible");
+}
+
+function teclaEscCierraMenu(evento) {
+  if (evento.key === "Escape") {
+    document.querySelector("nav").classList.remove("visible");
+  }
+}
+
+document.querySelector(".menu-btn-a").addEventListener("click", muestraMenu);500
+document.querySelector(".menu-btn-c").addEventListener("click", ocultaMenu);
+document.addEventListener("click", clickFueraDeMenu);
+document.addEventListener("keydown", teclaEscCierraMenu);
+
+    </script>
+</html>
