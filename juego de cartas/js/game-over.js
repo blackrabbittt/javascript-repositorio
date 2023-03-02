@@ -1,4 +1,5 @@
 function gameOver(){
+    clearInterval(cronometro);
     document.querySelector("#gameover").classList.add("visited");
 }
 

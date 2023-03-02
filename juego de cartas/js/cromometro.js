@@ -3,7 +3,7 @@ function iniciaCronometro(){
     var minutos = 0;
     var segundosTexto;
     var minutosTexto;
-    var cromometro;
+   
  
     function actualizarContador(){
         segundos--;
@@ -14,7 +14,7 @@ function iniciaCronometro(){
         if (minutos < 0){
             segundos = 0;
             minutos = 0;
-            clearInterval(cromometro);
+            clearInterval(cronometro);
             timeOver();
         }
         segundosTexto = segundos;
@@ -30,5 +30,5 @@ function iniciaCronometro(){
         document.querySelector("#segundos").innerText = segundosTexto;
 
     }
-    cromometro = setInterval(actualizarContador, 1000);
+    cronometro = setInterval(actualizarContador, 1000);
 }

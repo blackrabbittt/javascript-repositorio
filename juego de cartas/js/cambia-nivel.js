@@ -12,4 +12,5 @@ function cargaNuevoNivel(){
 subeNivel();
 actualizaNivel();
 iniciar();
+
 }

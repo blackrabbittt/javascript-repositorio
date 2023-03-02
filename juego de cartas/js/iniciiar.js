@@ -1,13 +1,12 @@
 function iniciar(){
 movimientos = 0;
 reparteTarjetas(niveles[nivelActual].tarjetas);
-
 document.querySelector("#mov").innerText = "00";
 maxContador();
 document.querySelector(".selecciona-nivel").classList.remove("visited");
 document.querySelector("#endgame").classList.remove("visited");
 document.querySelector("#gameover").classList.remove("visited");
-document.querySelector("#timeOver").classList.remove("visited");
+document.querySelector("#timeover").classList.remove("visited");
 document.querySelector("#subenivel").classList.remove("visited");
 
 document.querySelectorAll(".tarjeta").forEach(
