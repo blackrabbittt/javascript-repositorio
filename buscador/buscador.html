@@ -1,0 +1,42 @@
+<html>
+    <style>
+.card-info {
+    display: flex;
+    column-gap: 10px;
+    margin-top: 10px;
+}
+.card {
+    display: flex;
+    width: 250px;
+    height: 200px;
+    background: grey;
+    border-radius: 12px;
+    padding: 5px;
+    flex-direction: column;
+    align-items: center;
+}
+img{
+    width: 100px;
+}
+.filtro{
+    display: none;
+}
+    </style>
+    <body>
+        
+        <div>
+            <input type="text" name="buscador" id="buscador" placeholder="buscar...">
+            <div class="card-info">
+                <div class="card articulo"> <img src="./img/naruto.webp" alt=""> <h3>naruto</h3></div>
+                <div class="card articulo"> <img src="./img/one.jpg" alt=""><h3>one piece</h3></div>
+                <div class="card articulo"> <img src="./img/bleach.jpg" alt=""><h3>bleach</h3></div>
+                <div class="card articulo"> <img src="./img/full.webp" alt=""><h3>full metal alquemist</h3></div>
+                <div class="card articulo"> <img src="./img/gintama.webp" alt=""><h3>gintama</h3></div>
+                <div class="card articulo"> <img src="./img/hxh.webp" alt=""><h3>hunter x hunter</h3></div>
+                <div class="card articulo"> <img src="./img/ngnf.jpg" alt=""><h3>no game no life</h3></div>
+                <div class="card articulo"> <img src="./img/stein.jfif" alt=""><h3>stein gate</h3></div>
+            </div>
+        </div>
+        <script src="./buscador-fun.js"></script>
+    </body>
+</html>
