@@ -35,6 +35,8 @@ width: 450px;
 height: 250px;
 background: rgba(0, 162, 255, 0.514);
 border-radius: 14px;
+
+
  }
  .modulo p{
     font-size: 36px;
@@ -45,7 +47,9 @@ border-radius: 14px;
     margin: 20px;
  }
  .activo{
+  
     display: flex;
+   
  }
  .oculto{
     display: none;
