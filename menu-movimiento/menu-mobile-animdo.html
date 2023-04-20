@@ -1,0 +1,179 @@
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <style>
+        *{
+            font-family: montserrat;
+        }
+        html {
+  scroll-behavior: smooth;
+}
+.goku{
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: calc(100vh - 80px);
+}
+
+#nav{
+    width: 100%;
+    max-width: 1366px;
+    height: 70px;
+    background: #c1c1c1;
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+    position: -webkit-sticky;
+    position: fixed;
+    top: 0;
+}
+#nav .indicador {
+	width: 0px;
+	height: 7px;
+	background: #113cfc;
+	position: absolute;
+	bottom: 0;
+	transition: .3s ease-out all;
+	/* transform: translate(-500px); */
+}
+.botones{
+    width: 100% !important;
+    max-width: 1366px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin: 0 auto;
+    align-items: center;
+    overflow-x: scroll;
+}
+.btn-nav{
+    width: 160px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-nav:hover{
+    background: goldenrod;
+
+}
+section{
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1366px;
+    height: 500px;
+}
+#uno{
+    background: red;
+}
+#dos{
+    background: green;
+}
+#tres{
+    background: orange;
+}
+#cuatro{
+    background: violet;
+}
+#cinco{
+    background: yellow;
+}
+#seis{
+    background: blue;
+}
+#siete{
+    background: grey;
+}
+#ocho{
+    background: black;
+}
+.active{
+    background: goldenrod;
+}
+@media screen and (max-width: 800px) {
+	#nav a {
+        width: 160px;
+		font-size: 14px;
+		padding: 5px;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	#nav a {
+		font-size: 12px;
+	}
+}
+    </style>
+    <div class="goku" id="goku">
+	</div>
+    <div id="nav">
+        <div class="botones" id="botones">
+     
+            <a href="#uno" class="btn-nav" id="btn-nav">numeroUno</a> 
+            <a href="#dos" class="btn-nav" id="btn-nav">numeroDos</a>
+            <a href="#tres" class="btn-nav" id="btn-nav">numeroTres</a>
+            <a href="#cuatro" class="btn-nav" id="btn-nav">numeroCuatro</a>
+            <a href="#cinco" class="btn-nav" id="btn-nav">numeroCinco</a>
+            <a href="#seis" class="btn-nav" id="btn-nav">numeroSeis</a>
+            <a href="#siete" class="btn-nav" id="btn-nav">numeroSiete</a>
+            <a href="#ocho" class="btn-nav" id="btn-nav">numeroOcho</a>
+            <span class="indicador" id="indicador"></span>
+     
+        </div>
+    </div>
+    <section class="seccion" id="uno"></section>
+    <section class="seccion" id="dos"></section>
+    <section class="seccion" id="tres"></section>
+    <section class="seccion" id="cuatro"></section>
+    <section class="seccion" id="cinco"></section>
+    <section class="seccion" id="seis"></section>
+    <section class="seccion" id="siete"></section>
+    <section class="seccion" id="ocho"></section>
+    <script>
+        const menu = document.getElementById('nav');
+        const indicador = document.getElementById('botones');
+        const secciones = document.querySelectorAll('.seccion');
+        
+        let tamañoIndicador = menu.querySelector('a').offsetWidth;
+        indicador.style.width =  tamañoIndicador + 'px';
+        
+        let indexSeccionActiva;
+        
+        // Observer
+        const observer = new IntersectionObserver((entradas, observer) => {
+            entradas.forEach(entrada => {
+                if(entrada.isIntersecting){
+                  
+                    indexSeccionActiva = [...secciones].indexOf(entrada.target);
+                    indicador.style.transform = `translateX(-${tamañoIndicador * indexSeccionActiva}px)`;
+        
+                   
+                
+            }
+            });
+        }, {
+            rootMargin: '-80px 0px 0px 0px',
+            threshold: 0.2
+        });
+        
+       
+        observer.observe(document.getElementById('goku'));
+        
+   
+        secciones.forEach(seccion => observer.observe(seccion));
+        
+        
+        const onResize = () => {
+        
+            tamañoIndicador = menu.querySelector('a').offsetWidth;
+        
+          
+            indicador.style.width = `${tamañoIndicador}px`;
+        
+         
+            indicador.style.transform = `translateX(${tamañoIndicador * indexSeccionActiva}px)`;
+        }
+        
+        window.addEventListener('resize', onResize);
+            </script>
+</html>
