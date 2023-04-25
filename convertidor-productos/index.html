@@ -1,0 +1,124 @@
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style>
+    *{
+        font-family: montserrat;
+    }
+    body{
+        background: url(https://i.pinimg.com/originals/db/9f/1c/db9f1c2c296ab041cbc7cbe3a0f6f3e8.gif);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .contenedor-chocoramo{
+        width: 100%;
+        max-width: 1360px;
+        margin:0 auto ;
+        
+    }
+    .convertidor-cont{
+    width: 280px;
+    height: 300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    background: rgb(255 166 0 / 89%);
+    border-radius: 18px;
+    align-items: center;
+    box-shadow: 0px 5px 6px 0px rgb(0 0 0 / 16%);
+    }
+  .btn{
+    background: #2196F3;
+    border-radius: 18px !important;
+    width: 100%;
+    font-size: 20px;
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+    margin: 10px 0;
+    border: solid 2px #fff;
+    border-style: none;
+}
+p{
+     width: 100%;
+    height: 50px;
+    font-size: 24px;
+    background: white;
+    box-shadow: none;
+    border-radius: 18px;
+    border: none;
+    border-bottom: solid 2px red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#pesos{
+         width: 100%;
+    height: 50px;
+    font-size: 24px;
+    background: white;
+    box-shadow: none;
+    border-radius: 18px;
+    border: none;
+    border-bottom: solid 2px red;
+    display: flex;
+    text-align: center;
+}
+#pesos:hover, #pesos:focus{
+  border:none;
+      border-bottom:solid 2px red;
+}
+.botones-mas{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin: 20px auto;
+    justify-content: center;
+}
+.btn-mas{
+    width: 100px;
+    height: 100px;
+    font-size: 50px;
+    background: white;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .4s ease all;
+    text-decoration: none;
+}
+
+.btn-mas:hover{
+    transform: scale(1.1);
+}
+</style>
+<div class="contenedor-chocoramo">
+    <div class="convertidor-cont">
+<label style="margin: 20px 0; font-weight: bold; color: white;font-size: 24px;">Salario en pesos/co</label>
+<input type="text" id="pesos"> 
+<br>
+<button type="button"  class="btn" onClick="cambio()">
+  convertir a Chocoramo
+  </button>
+<br>
+<label style="margin: 20px 0; font-weight: bold; color: white;font-size: 20px;">Cantidad en chocoramo</label>
+<p type="text" id="resul" >
+</p>
+</div>
+<div class="botones-mas">
+    <div class="btn-mas"><a href="./aguacate.html">🥑</a></div>
+    <div class="btn-mas"><a href="./pan.html">🥖</a> </div>
+    <div class="btn-mas"><a href="./cono-helado.html">🍦</a> </div>
+</div>
+<script>
+  function cambio(){
+var chocoramo = 2500; 
+var re ;   
+var pe =parseInt(document.getElementById('pesos').value, 10);
+ 
+re = pe / chocoramo ;
+document.getElementById('resul').innerHTML= re;
+
+}
+</script>
+</div>
