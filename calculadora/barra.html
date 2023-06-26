@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Barra Cambiadora de Color</title>
+</head>
+
+<body>
+    <style>
+        *{
+            font-family: montserrat;
+        }
+        .contenedor{
+            width: 100%;
+        max-width: 580px;
+        margin: 20px auto 0 auto;
+        background: rgb(233, 232, 232);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0px 5px 6px 0px rgb(0 0 0 / 16%);
+    }
+        h1{
+            width: 100%;
+            max-width: 500px;
+            margin: 10px auto;
+            text-align: center;
+
+        }
+        #div-cambiar-color{
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+            background: orange;
+        }
+        #barra {
+        width: 100%;
+        max-width: 480px;
+        margin: 20px auto;
+        height: 20px;
+        border-radius: 20px;
+        background-color:rgb(0, 174, 255 );
+        cursor: move;
+        position: relative;
+        overflow: hidden;
+      }
+     
+    #circulo, #circulo-d, #circulo-v, #circulo-b{
+      position: absolute;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: black;
+      pointer-events: none;
+      
+    }
+    #barra-t {
+        width: 100%;
+        max-width: 480px;
+        margin: 20px auto;
+        height: 20px;
+        border-radius: 20px;
+        background-color: red;
+        cursor: col-resize;
+        position: relative;
+        overflow: hidden;
+}
+#barra-b {
+        width: 100%;
+        max-width: 480px;
+        margin: 20px auto;
+        height: 20px;
+        border-radius: 20px;
+        background-color: rgb(255, 238, 0);
+        cursor: col-resize;
+        position: relative;
+        overflow: hidden;
+}
+#barra-a {
+        width: 100%;
+        max-width: 480px;
+        margin: 20px auto;
+        height: 20px;
+        border-radius: 20px;
+        background-color: rgb(255, 238, 0);
+        cursor: col-resize;
+        position: relative;
+        overflow: hidden;
+}
+#div-cambiar-color {
+      width: 200px;
+      height: 200px;
+      background-color: red;
+    }
+
+    dialog {
+      width: 400px;
+      height: 400px;
+      padding: 20px;
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    #mostrar-estilos-btn {
+    height: 50px;
+    border-radius: 12px;
+    margin: 0 40%;
+}
+      </style>
+      
+      <div id="div-cambiar-color"></div>
+      <div class="contenedor">
+      <h1>background</h1>
+    <div id="barra">
+        <div id="circulo"></div>
+    </div>
+    <h1>width</h1>
+    <div id="barra-t">
+        <div id="circulo-d"></div>
+    </div>
+    <h1>height</h1>
+    <div id="barra-a">
+        <div id="circulo-v"></div>
+    </div>
+    <h1>border-radius</h1>
+    <div id="barra-b">
+        <div id="circulo-b"></div>
+    </div>
+    <button id="mostrar-estilos-btn">Mostrar Estilos</button>
+    <dialog id="dialogo-estilos">
+        <h2>Estilos Aplicados</h2>
+        <pre id="estilos-texto"></pre>
+        <button type="button" id="cerrar-dialogo-btn">Cerrar</button>
+      </dialog>
+</div>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+          var barra = document.getElementById('barra');
+          var divCambiarColor = document.getElementById('div-cambiar-color');
+          var circulo = document.getElementById('circulo');
+          var body = document.body;
+        
+          barra.addEventListener('mousedown', function() {
+            body.addEventListener('mousemove', moverBarra);
+          });
+        
+          body.addEventListener('mouseup', function() {
+            body.removeEventListener('mousemove', moverBarra);
+          });
+        
+          function moverBarra(event) {
+            var posX = event.clientX;
+            var porcentaje = (posX / window.innerWidth) * 100;
+            var color = 'hsl(' + porcentaje + ', 100%, 50%)';
+            divCambiarColor.style.backgroundColor = color;
+        
+            var barraWidth = barra.offsetWidth;
+            var barraOffsetLeft = barra.offsetLeft;
+            var circlePosition = posX - barraOffsetLeft;
+            circulo.style.opacity = '1';
+            circulo.style.left = circlePosition + 'px';
+          }
+        });
+        </script>
+        <script>
+window.addEventListener('DOMContentLoaded', function() {
+  var barra = document.getElementById('barra-t');
+  var elemento = document.getElementById('div-cambiar-color');
+  var circulo = document.getElementById('circulo-d');
+  var body = document.body;
+  var resizing = false;
+  var startX;
+  var startWidth;
+
+  barra.addEventListener('mousedown', function(event) {
+    startX = event.clientX;
+    startWidth = parseInt(document.defaultView.getComputedStyle(elemento).width, 10);
+    resizing = true;
+  });
+
+  body.addEventListener('mousemove', function(event) {
+    if (!resizing) return;
+    var width = startWidth + (event.clientX - startX);
+    elemento.style.width = width + 'px';
+
+    var barraWidth = barra.offsetWidth;
+    var barraOffsetLeft = barra.offsetLeft;
+    var circlePosition = (width / barraWidth) * barraWidth;
+    circulo.style.opacity = '1';
+    circulo.style.left = circlePosition + 'px';
+  });
+
+  body.addEventListener('mouseup', function() {
+    resizing = false;
+  });
+});
+        </script>
+        <script>
+          window.addEventListener('DOMContentLoaded', function() {
+  var barra = document.getElementById('barra-b');
+  var elemento = document.getElementById('div-cambiar-color');
+  var circulo = document.getElementById('circulo-b');
+  var body = document.body;
+  var resizing = false;
+  var startX;
+  var startRadius;
+
+  barra.addEventListener('mousedown', function(event) {
+    startX = event.clientX;
+    startRadius = parseInt(document.defaultView.getComputedStyle(elemento).borderRadius, 10);
+    resizing = true;
+  });
+
+  body.addEventListener('mousemove', function(event) {
+    if (!resizing) return;
+    var radius = startRadius + (event.clientX - startX);
+    elemento.style.borderRadius = radius + 'px';
+
+    var barraWidth = barra.offsetWidth;
+    var barraOffsetLeft = barra.offsetLeft;
+    var circlePosition = (radius / barraWidth) * barraWidth;
+    circulo.style.opacity = '1';
+    circulo.style.left = circlePosition + 'px';
+  });
+
+  body.addEventListener('mouseup', function() {
+    resizing = false;
+  });
+});
+        </script>
+               <script>
+          
+
+    window.addEventListener('DOMContentLoaded', function() {
+  var barra = document.getElementById('barra-a');
+  var elemento = document.getElementById('div-cambiar-color');
+  var circulo = document.getElementById('circulo-v');
+  var body = document.body;
+  var resizing = false;
+  var startX;
+  var startHeight;
+
+  barra.addEventListener('mousedown', function(event) {
+    startX = event.clientX;
+    startHeight = parseInt(document.defaultView.getComputedStyle(elemento).height, 10);
+    resizing = true;
+  });
+
+  body.addEventListener('mousemove', function(event) {
+    if (!resizing) return;
+    var height = startHeight + (event.clientX - startX);
+    elemento.style.height = height + 'px';
+
+    var barraHeight = barra.offsetHeight;
+    var barraOffsetLeft = barra.offsetLeft;
+    var circlePosition = (height / barraHeight) * barraHeight;
+    circulo.style.opacity = '1';
+    circulo.style.left = circlePosition + 'px';
+  });
+
+  body.addEventListener('mouseup', function() {
+    resizing = false;
+  });
+});
+            </script>
+            <script>    
+     window.addEventListener('DOMContentLoaded', function() {
+  var mostrarEstilosBtn = document.getElementById('mostrar-estilos-btn');
+  var divCambiarColor = document.getElementById('div-cambiar-color');
+  var dialogoEstilos = document.getElementById('dialogo-estilos');
+
+  mostrarEstilosBtn.addEventListener('click', function() {
+    var estilos = window.getComputedStyle(divCambiarColor);
+    var estilosTexto = '';
+
+    for (var i = 0; i < estilos.length; i++) {
+      var estilo = estilos[i];
+      var valor = estilos.getPropertyValue(estilo);
+      estilosTexto += estilo + ': ' + valor + '\n';
+    }
+
+    dialogoEstilos.textContent = estilosTexto;
+    dialogoEstilos.showModal();
+  });
+
+  dialogoEstilos.addEventListener('cancel', function() {
+    dialogoEstilos.close();
+  });
+
+  window.addEventListener('click', function(event) {
+    if (event.target === dialogoEstilos) {
+      dialogoEstilos.close();
+    }
+  });
+});
+            </script>
+</body>
+</html>

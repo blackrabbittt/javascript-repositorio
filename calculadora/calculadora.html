@@ -1,0 +1,139 @@
+<style>
+    *{
+        font-family: montserrat;
+    }
+    .calculator{
+        width: 100%;
+        max-width: 480px;
+        margin: 20px auto 0 auto;
+        background: rgb(0, 174, 255);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0px 5px 6px 0px rgb(0 0 0 / 16%);
+    }
+    .teclas{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+        gap: 10px;
+
+    }
+    #display{
+        width: 100%;
+        height: 80px;
+        margin-bottom: 10px;
+        border: 2px solid black;
+        border-radius: 12px;
+        font-size: 38px;
+        font-weight: 900;
+    }
+    button{
+        width: 100%;
+        height: 80px;
+        font-size: 28px;
+        font-weight: 900;
+        border-radius: 12px;
+        border-style: none;
+        box-shadow: 0px 5px 6px 0px rgb(0 0 0 / 16%);
+    }
+    button:hover{
+        background: rgb(177, 177, 177);
+    }
+
+    #barra {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    height: 20px;
+    border-radius: 20px;
+    background-color:rgb(0, 174, 255 );
+    cursor: move;
+    position: relative;
+    overflow: hidden;
+  }
+  #circulo {
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: black;
+  pointer-events: none;
+  
+}
+  </style>
+<div id="barra">
+    <div id="circulo"></div>
+</div>
+
+<div class="calculator" id="div-cambiar-color">
+  <input type="text" id="display" readonly>
+ 
+  <div class="teclas">
+    <button onclick="appendToDisplay('9')">9</button>
+    <button onclick="appendToDisplay('8')">8</button> 
+    <button onclick="appendToDisplay('7')">7</button>
+    <button onclick="appendToDisplay('6')">6</button>
+    <button onclick="appendToDisplay('5')">5</button>
+    <button onclick="appendToDisplay('4')">4</button>
+    <button onclick="appendToDisplay('3')">3</button>
+    <button onclick="appendToDisplay('2')">2</button>
+    <button onclick="appendToDisplay('1')">1</button>
+    <button onclick="appendToDisplay('0')">0</button>
+    <button onclick="appendToDisplay('*')">*</button>
+    <button onclick="appendToDisplay('.')">.</button>
+    <button onclick="appendToDisplay('+')">+</button>
+    <button onclick="appendToDisplay('/')">/</button>
+    <button onclick="appendToDisplay('-')">-</button>
+    <button onclick="calculateResult()">=</button>
+    <button onclick="clearDisplay()">C</button>
+  </div>
+  
+</div>
+<script>
+  function appendToDisplay(value) {
+  document.getElementById('display').value += value;
+}
+
+function calculateResult() {
+  var displayValue = document.getElementById('display').value;
+  var result = eval(displayValue); // Utilizamos eval() para evaluar la expresión matemática ingresada
+  document.getElementById('display').value = result;
+}
+
+function clearDisplay() {
+  document.getElementById('display').value = '';
+}
+</script>
+
+
+<script src="script.js"></script>
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  var barra = document.getElementById('barra');
+  var divCambiarColor = document.getElementById('div-cambiar-color');
+  var circulo = document.getElementById('circulo');
+  var body = document.body;
+
+  barra.addEventListener('mousedown', function() {
+    body.addEventListener('mousemove', moverBarra);
+  });
+
+  body.addEventListener('mouseup', function() {
+    body.removeEventListener('mousemove', moverBarra);
+  });
+
+  function moverBarra(event) {
+    var posX = event.clientX;
+    var porcentaje = (posX / window.innerWidth) * 100;
+    var color = 'hsl(' + porcentaje + ', 100%, 50%)';
+    divCambiarColor.style.backgroundColor = color;
+
+    var barraWidth = barra.offsetWidth;
+    var barraOffsetLeft = barra.offsetLeft;
+    var circlePosition = posX - barraOffsetLeft;
+    circulo.style.opacity = '1';
+    circulo.style.left = circlePosition + 'px';
+  }
+});
+</script>
