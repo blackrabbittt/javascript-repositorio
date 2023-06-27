@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Barra Cambiadora de Color</title>
 </head>
 
@@ -30,6 +31,7 @@
             height: 250px;
             margin: 0 auto;
             background: orange;
+            transform: rotate(180deg);
         }
         #barra {
         width: 100%;
@@ -43,7 +45,7 @@
         overflow: hidden;
       }
      
-    #circulo, #circulo-d, #circulo-v, #circulo-b{
+    #circulo, #circulo-d, #circulo-v, #circulo-b, #circulo-o{
       position: absolute;
       left: 0;
       width: 20px;
@@ -70,7 +72,7 @@
         margin: 20px auto;
         height: 20px;
         border-radius: 20px;
-        background-color: rgb(255, 238, 0);
+        background-color: rgb(0, 255, 170);
         cursor: col-resize;
         position: relative;
         overflow: hidden;
@@ -82,6 +84,17 @@
         height: 20px;
         border-radius: 20px;
         background-color: rgb(255, 238, 0);
+        cursor: col-resize;
+        position: relative;
+        overflow: hidden;
+}
+#barra-o {
+        width: 100%;
+        max-width: 480px;
+        margin: 20px auto;
+        height: 20px;
+        border-radius: 20px;
+        background-color: rgb(0, 255, 34);
         cursor: col-resize;
         position: relative;
         overflow: hidden;
@@ -99,6 +112,7 @@
       background-color: #f2f2f2;
       border: 1px solid #ccc;
       border-radius: 5px;
+      font-size: 26px;
     }
     #mostrar-estilos-btn {
     height: 50px;
@@ -110,20 +124,29 @@
       <div id="div-cambiar-color"></div>
       <div class="contenedor">
       <h1>background</h1>
+      <div id="valor-posicion"></div>
     <div id="barra">
         <div id="circulo"></div>
     </div>
     <h1>width</h1>
+    <div id="valor-ancho"></div>
     <div id="barra-t">
         <div id="circulo-d"></div>
     </div>
     <h1>height</h1>
+    <div id="valor-alto"></div>
     <div id="barra-a">
         <div id="circulo-v"></div>
     </div>
     <h1>border-radius</h1>
+    <div id="valor-radio"></div>
     <div id="barra-b">
         <div id="circulo-b"></div>
+    </div>
+    <h1>rotate</h1>
+    <div id="valor-rotate"></div>
+    <div id="barra-o">
+        <div id="circulo-o"></div>
     </div>
     <button id="mostrar-estilos-btn">Mostrar Estilos</button>
     <dialog id="dialogo-estilos">
@@ -133,39 +156,59 @@
       </dialog>
 </div>
     <script>
-        window.addEventListener('DOMContentLoaded', function() {
-          var barra = document.getElementById('barra');
-          var divCambiarColor = document.getElementById('div-cambiar-color');
-          var circulo = document.getElementById('circulo');
-          var body = document.body;
-        
-          barra.addEventListener('mousedown', function() {
-            body.addEventListener('mousemove', moverBarra);
-          });
-        
-          body.addEventListener('mouseup', function() {
-            body.removeEventListener('mousemove', moverBarra);
-          });
-        
-          function moverBarra(event) {
-            var posX = event.clientX;
-            var porcentaje = (posX / window.innerWidth) * 100;
-            var color = 'hsl(' + porcentaje + ', 100%, 50%)';
-            divCambiarColor.style.backgroundColor = color;
-        
-            var barraWidth = barra.offsetWidth;
-            var barraOffsetLeft = barra.offsetLeft;
-            var circlePosition = posX - barraOffsetLeft;
-            circulo.style.opacity = '1';
-            circulo.style.left = circlePosition + 'px';
-          }
-        });
+      window.addEventListener('DOMContentLoaded', function() {
+  var barra = document.getElementById('barra');
+  var divCambiarColor = document.getElementById('div-cambiar-color');
+  var circulo = document.getElementById('circulo');
+  var valorPosicion = document.getElementById('valor-posicion');
+  var body = document.body;
+
+  barra.addEventListener('mousedown', function() {
+    body.addEventListener('mousemove', moverBarra);
+  });
+
+  barra.addEventListener('touchstart', function(event) {
+    event.preventDefault();
+    body.addEventListener('touchmove', moverBarra);
+  });
+
+  body.addEventListener('mouseup', function() {
+    body.removeEventListener('mousemove', moverBarra);
+  });
+
+  body.addEventListener('touchend', function() {
+    body.removeEventListener('touchmove', moverBarra);
+  });
+
+  function moverBarra(event) {
+    var posX = getClientX(event);
+    var porcentaje = (posX / window.innerWidth) * 100;
+    var color = 'hsl(' + porcentaje + ', 100%, 50%)';
+    divCambiarColor.style.backgroundColor = color;
+
+    var barraWidth = barra.offsetWidth;
+    var barraOffsetLeft = barra.offsetLeft;
+    var circlePosition = posX - barraOffsetLeft;
+    circulo.style.opacity = '1';
+    circulo.style.left = circlePosition + 'px';
+
+    valorPosicion.textContent = 'Background: ' + color;
+  }
+
+  function getClientX(event) {
+    if (event.touches && event.touches.length > 0) {
+      return event.touches[0].clientX;
+    }
+    return event.clientX;
+  }
+});
         </script>
         <script>
 window.addEventListener('DOMContentLoaded', function() {
   var barra = document.getElementById('barra-t');
   var elemento = document.getElementById('div-cambiar-color');
   var circulo = document.getElementById('circulo-d');
+  var valorAncho = document.getElementById('valor-ancho');
   var body = document.body;
   var resizing = false;
   var startX;
@@ -177,9 +220,16 @@ window.addEventListener('DOMContentLoaded', function() {
     resizing = true;
   });
 
+  barra.addEventListener('touchstart', function(event) {
+    startX = event.touches[0].clientX;
+    startWidth = parseInt(document.defaultView.getComputedStyle(elemento).width, 10);
+    resizing = true;
+  });
+
   body.addEventListener('mousemove', function(event) {
     if (!resizing) return;
-    var width = startWidth + (event.clientX - startX);
+    var clientX = getClientX(event);
+    var width = startWidth + (clientX - startX);
     elemento.style.width = width + 'px';
 
     var barraWidth = barra.offsetWidth;
@@ -187,18 +237,47 @@ window.addEventListener('DOMContentLoaded', function() {
     var circlePosition = (width / barraWidth) * barraWidth;
     circulo.style.opacity = '1';
     circulo.style.left = circlePosition + 'px';
+
+    valorAncho.textContent = 'Ancho: ' + width + 'px';
+  });
+
+  body.addEventListener('touchmove', function(event) {
+    if (!resizing) return;
+    var clientX = getClientX(event);
+    var width = startWidth + (clientX - startX);
+    elemento.style.width = width + 'px';
+
+    var barraWidth = barra.offsetWidth;
+    var barraOffsetLeft = barra.offsetLeft;
+    var circlePosition = (width / barraWidth) * barraWidth;
+    circulo.style.opacity = '1';
+    circulo.style.left = circlePosition + 'px';
+
+    valorAncho.textContent = 'Ancho: ' + width + 'px';
   });
 
   body.addEventListener('mouseup', function() {
     resizing = false;
   });
+
+  body.addEventListener('touchend', function() {
+    resizing = false;
+  });
+
+  function getClientX(event) {
+    if (event.touches && event.touches.length > 0) {
+      return event.touches[0].clientX;
+    }
+    return event.clientX;
+  }
 });
         </script>
         <script>
-          window.addEventListener('DOMContentLoaded', function() {
+       window.addEventListener('DOMContentLoaded', function() {
   var barra = document.getElementById('barra-b');
   var elemento = document.getElementById('div-cambiar-color');
   var circulo = document.getElementById('circulo-b');
+  var valorRadio = document.getElementById('valor-radio');
   var body = document.body;
   var resizing = false;
   var startX;
@@ -210,9 +289,16 @@ window.addEventListener('DOMContentLoaded', function() {
     resizing = true;
   });
 
+  barra.addEventListener('touchstart', function(event) {
+    startX = event.touches[0].clientX;
+    startRadius = parseInt(document.defaultView.getComputedStyle(elemento).borderRadius, 10);
+    resizing = true;
+  });
+
   body.addEventListener('mousemove', function(event) {
     if (!resizing) return;
-    var radius = startRadius + (event.clientX - startX);
+    var clientX = getClientX(event);
+    var radius = startRadius + (clientX - startX);
     elemento.style.borderRadius = radius + 'px';
 
     var barraWidth = barra.offsetWidth;
@@ -220,50 +306,181 @@ window.addEventListener('DOMContentLoaded', function() {
     var circlePosition = (radius / barraWidth) * barraWidth;
     circulo.style.opacity = '1';
     circulo.style.left = circlePosition + 'px';
+
+    valorRadio.textContent = 'Radio: ' + radius + 'px';
+  });
+
+  body.addEventListener('touchmove', function(event) {
+    if (!resizing) return;
+    var clientX = getClientX(event);
+    var radius = startRadius + (clientX - startX);
+    elemento.style.borderRadius = radius + 'px';
+
+    var barraWidth = barra.offsetWidth;
+    var barraOffsetLeft = barra.offsetLeft;
+    var circlePosition = (radius / barraWidth) * barraWidth;
+    circulo.style.opacity = '1';
+    circulo.style.left = circlePosition + 'px';
+
+    valorRadio.textContent = 'Radio: ' + radius + 'px';
   });
 
   body.addEventListener('mouseup', function() {
     resizing = false;
   });
-});
-        </script>
+
+  body.addEventListener('touchend', function() {
+    resizing = false;
+  });
+
+  function getClientX(event) {
+    if (event.touches && event.touches.length > 0) {
+      return event.touches[0].clientX;
+    }
+    return event.clientX;
+  }
+});    </script>
                <script>
           
-
-    window.addEventListener('DOMContentLoaded', function() {
+          window.addEventListener('DOMContentLoaded', function() {
   var barra = document.getElementById('barra-a');
   var elemento = document.getElementById('div-cambiar-color');
   var circulo = document.getElementById('circulo-v');
+  var valorPosicion = document.getElementById('valor-alto');
   var body = document.body;
   var resizing = false;
-  var startX;
+  var startY;
   var startHeight;
 
   barra.addEventListener('mousedown', function(event) {
-    startX = event.clientX;
+    startY = event.clientY;
+    startHeight = parseInt(document.defaultView.getComputedStyle(elemento).height, 10);
+    resizing = true;
+  });
+
+  barra.addEventListener('touchstart', function(event) {
+    startY = event.touches[0].clientY;
     startHeight = parseInt(document.defaultView.getComputedStyle(elemento).height, 10);
     resizing = true;
   });
 
   body.addEventListener('mousemove', function(event) {
     if (!resizing) return;
-    var height = startHeight + (event.clientX - startX);
+    var clientY = getClientY(event);
+    var height = startHeight + (clientY - startY);
     elemento.style.height = height + 'px';
 
-    var barraHeight = barra.offsetHeight;
+    var barraWidth = barra.offsetWidth;
     var barraOffsetLeft = barra.offsetLeft;
-    var circlePosition = (height / barraHeight) * barraHeight;
+    var circlePosition = (height / barraWidth) * barraWidth;
     circulo.style.opacity = '1';
     circulo.style.left = circlePosition + 'px';
+
+    valorPosicion.textContent = 'Alto: ' + circlePosition + 'px';
+  });
+
+  body.addEventListener('touchmove', function(event) {
+    if (!resizing) return;
+    var clientY = getClientY(event);
+    var height = startHeight + (clientY - startY);
+    elemento.style.height = height + 'px';
+
+    var barraWidth = barra.offsetWidth;
+    var barraOffsetLeft = barra.offsetLeft;
+    var circlePosition = (height / barraWidth) * barraWidth;
+    circulo.style.opacity = '1';
+    circulo.style.left = circlePosition + 'px';
+
+    valorPosicion.textContent = 'Alto: ' + circlePosition + 'px';
   });
 
   body.addEventListener('mouseup', function() {
     resizing = false;
   });
+
+  body.addEventListener('touchend', function() {
+    resizing = false;
+  });
+
+  function getClientY(event) {
+    if (event.touches && event.touches.length > 0) {
+      return event.touches[0].clientY;
+    }
+    return event.clientY;
+  }
 });
             </script>
+               <script>
+          window.addEventListener('DOMContentLoaded', function() {
+  var barra = document.getElementById('barra-o');
+  var elemento = document.getElementById('div-cambiar-color');
+  var circulo = document.getElementById('circulo-o');
+  var valorAncho = document.getElementById('valor-rotate');
+  var body = document.body;
+  var resizing = false;
+  var startX;
+  var startRotation;
+
+  barra.addEventListener('mousedown', startResize);
+  barra.addEventListener('touchstart', startResize);
+
+  body.addEventListener('mousemove', resizeElement);
+  body.addEventListener('touchmove', resizeElement);
+
+  body.addEventListener('mouseup', stopResize);
+  body.addEventListener('touchend', stopResize);
+
+  function startResize(event) {
+    startX = getClientX(event);
+    startRotation = parseInt(getRotationValue(elemento), 10);
+    resizing = true;
+  }
+
+  function resizeElement(event) {
+    if (!resizing) return;
+    var clientX = getClientX(event);
+    var rotation = startRotation + (clientX - startX);
+    elemento.style.transform = 'rotate(' + rotation + 'deg)';
+
+    var barraWidth = barra.offsetWidth;
+    var barraOffsetLeft = barra.offsetLeft;
+    var circlePosition = (rotation / barraWidth) * barraWidth;
+    circulo.style.opacity = '1';
+    circulo.style.left = circlePosition + 'px';
+
+    valorAncho.textContent = 'Rotación: ' + rotation + 'deg';
+  }
+
+  function stopResize() {
+    resizing = false;
+  }
+
+  function getClientX(event) {
+    if (event.touches && event.touches.length > 0) {
+      return event.touches[0].clientX;
+    }
+    return event.clientX;
+  }
+
+  function getRotationValue(element) {
+    var style = window.getComputedStyle(element);
+    var transform = style.getPropertyValue('transform');
+    var matrix = transform.match(/^matrix\((.+)\)$/);
+
+    if (matrix) {
+      var values = matrix[1].split(', ');
+      if (values.length === 6) {
+        var angle = Math.round(Math.atan2(parseFloat(values[1]), parseFloat(values[0])) * (180 / Math.PI));
+        return angle;
+      }
+    }
+
+    return 0;
+  }
+});
+                        </script>
             <script>    
-     window.addEventListener('DOMContentLoaded', function() {
+ window.addEventListener('DOMContentLoaded', function() {
   var mostrarEstilosBtn = document.getElementById('mostrar-estilos-btn');
   var divCambiarColor = document.getElementById('div-cambiar-color');
   var dialogoEstilos = document.getElementById('dialogo-estilos');
@@ -272,11 +489,17 @@ window.addEventListener('DOMContentLoaded', function() {
     var estilos = window.getComputedStyle(divCambiarColor);
     var estilosTexto = '';
 
-    for (var i = 0; i < estilos.length; i++) {
-      var estilo = estilos[i];
-      var valor = estilos.getPropertyValue(estilo);
-      estilosTexto += estilo + ': ' + valor + '\n';
-    }
+    var width = estilos.getPropertyValue('width');
+    var height = estilos.getPropertyValue('height');
+    var borderRadius = estilos.getPropertyValue('border-radius');
+    var background = estilos.getPropertyValue('background');
+    var transform = estilos.getPropertyValue('transform');
+
+    estilosTexto += 'Width: ' + width + '\n';
+    estilosTexto += 'Height: ' + height + '\n';
+    estilosTexto += 'Border Radius: ' + borderRadius + '\n';
+    estilosTexto += 'Background: ' + background + '\n';
+    estilosTexto += 'Transform: ' + transform + '\n';
 
     dialogoEstilos.textContent = estilosTexto;
     dialogoEstilos.showModal();
