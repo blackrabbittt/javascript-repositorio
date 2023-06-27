@@ -495,11 +495,11 @@ window.addEventListener('DOMContentLoaded', function() {
     var background = estilos.getPropertyValue('background');
     var transform = estilos.getPropertyValue('transform');
 
-    estilosTexto += 'Width: ' + width + '\n';
+    estilosTexto += 'Width: ' + width + '\n' + ';';
     estilosTexto += 'Height: ' + height + '\n';
-    estilosTexto += 'Border Radius: ' + borderRadius + '\n';
-    estilosTexto += 'Background: ' + background + '\n';
-    estilosTexto += 'Transform: ' + transform + '\n';
+    estilosTexto += 'Border Radius: ' + borderRadius + '\n' + ';';
+    estilosTexto += 'Background: ' + background + '\n' + ';';
+    estilosTexto += 'Transform: ' + transform + '\n' + ';';
 
     dialogoEstilos.textContent = estilosTexto;
     dialogoEstilos.showModal();
